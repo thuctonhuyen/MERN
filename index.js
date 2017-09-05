@@ -4,7 +4,12 @@ const app = express();
 //object req: object representing the incoming request
 //object res: object representing the outgoing response
 app.get('/', (req, res) => {
-    res.send({hi: 'there'});
+    res.send(
+        {
+            hi: 'there',
+            'bye': 'buddy'
+        }
+    );
 });
 
 
