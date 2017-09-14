@@ -1,5 +1,17 @@
 const express = require('express');
+const passport = require('passport'); //give express ideas how to handle authentication
+const GoogleStrategy = require('passport-google-oauth20').Strategy; //instruct passport on how to authenticate with google
+const keys = require('./config/keys');
+
 const app = express();
+
+passport.use(new GoogleStrategy({
+    clientID: keys.googleClientID,
+    clientSecret: keys.googleClientSecret,
+    callbackURL: '/auth/google/callback', //route after user get grant permission
+}, (accessToken) => {
+    console.log(accessToken)
+})); //passport adapt to Google strategy
 
 //object req: object representing the incoming request
 //object res: object representing the outgoing response
