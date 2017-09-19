@@ -29,6 +29,7 @@ passport.use(new GoogleStrategy({
     clientID: keys.googleClientID,
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback', //route after user get grant permission
+    proxy: true
 }, (accessToken, refreshToken, profile, done) => {
     //google sees 'code' in url and replies with details about user
     //this is the opportunity to save user into our database
@@ -44,7 +45,6 @@ passport.use(new GoogleStrategy({
             //create new instance of user with new, save() => save to database
             new User({googleId: profile.id}).save()
                 .then((newUser) => done(null, newUser));
-
 
         }
     });
