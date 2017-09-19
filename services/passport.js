@@ -1,6 +1,5 @@
 const passport = require('passport'); //give express ideas how to handle authentication
 const GoogleStrategy = require('passport-google-oauth20').Strategy; //instruct passport on how to authenticate with google
-const FacebookStrategy = require('passport-facebook').Strategy;
 const keys = require('../config/keys');
 
 
