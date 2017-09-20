@@ -16,10 +16,10 @@ passport.serializeUser((user, done) => {
 });
 
 //deseriliaze id into user
-passport.deserializeUser(async (id, done) => {
-    const user = await User.findById(id);
-    done(null, user);
-
+passport.deserializeUser((id, done) => {
+    const user = User.findById(id).then((user) => {
+        done(null, user)
+    });
 });
 
 //configuration for passport:
@@ -30,12 +30,12 @@ passport.use(new GoogleStrategy({
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback', //route after user get grant permission
         proxy: true
-    }, async (accessToken, refreshToken, profile, done) => {
+    },
+    async (accessToken, refreshToken, profile, done) => {
         //google sees 'code' in url and replies with details about user
         //this is the opportunity to save user into our database
         //search for that user first:
         const existingUser = await User.findOne({googleId: profile.id});
-
         if (existingUser) {
             //first arg: null => indicate no error
             done(null, existingUser);
